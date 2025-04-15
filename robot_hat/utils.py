@@ -18,8 +18,6 @@ PURPLE = '0;35'
 DARK_GREEN = '0;36'
 WHITE = '0;37'
 
-_adc_obj = None
-
 def print_color(msg, end='\n', file=sys.stdout, flush=False, color=''):
     print('\033[%sm%s\033[0m'%(color, msg), end=end, file=file, flush=flush)
 
@@ -162,12 +160,9 @@ def get_battery_voltage():
     :return: battery voltage(V)
     :rtype: float
     """
-    global _adc_obj
     from .adc import ADC
-
-    if not isinstance(_adc_obj, ADC):
-        _adc_obj = ADC("A4")
-    raw_voltage = _adc_obj.read_voltage()
+    adc = ADC("A4")
+    raw_voltage = adc.read_voltage()
     voltage = raw_voltage * 3
     return voltage
 

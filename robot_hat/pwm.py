@@ -35,13 +35,23 @@ class PWM(I2C):
             super().__init__(self.ADDR, *args, **kwargs)
         else:
             super().__init__(address, *args, **kwargs)
-
+        
+        #print(channel)
+        #print(type(channel))
+        #channel = str(channel)
+        #print(channel)
+        #print(type(channel))
+        #channel = int(channel[1:])
+        #print(channel)
+        #print(type(channel))
+        
         if isinstance(channel, str):
-            if channel.startswith("P"):
-                channel = int(channel[1:])
-            else:
-                raise ValueError(
-                    f'PWM channel should be between [P0, P19], not "{channel}"')
+            #print("Type is string")
+            #if channel.startswith("P"):
+            channel = int(channel[1:])
+            #else:
+            #   raise ValueError(
+            #      f'PWM channel should be between [P0, P19], not "{channel}"')
         if isinstance(channel, int):
             if channel > 19 or channel < 0:
                 raise ValueError(

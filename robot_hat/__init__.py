@@ -15,6 +15,7 @@ from .servo import Servo
 from .tts import TTS
 from .utils import *
 from .robot import Robot
+from .joystick import Joystick
 from .version import __version__
 
 from .device import Devices

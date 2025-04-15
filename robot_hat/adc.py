@@ -21,20 +21,29 @@ class ADC(I2C):
             super().__init__(self.ADDR, *args, **kwargs)
         self._debug(f'ADC device address: 0x{self.address:02X}')
 
+        print(f'Blocking here: {chn}')
+
         if isinstance(chn, str):
             # If chn is a string, assume it's a pin name, remove A and convert to int
             if chn.startswith("A"):
+                print("Converting string.")
                 chn = int(chn[1:])
+                print(chn)
             else:
                 raise ValueError(
                     f'ADC channel should be between [A0, A7], not "{chn}"')
         # Make sure channel is between 0 and 7
-        if chn < 0 or chn > 7:
-            raise ValueError(
-                f'ADC channel should be between [0, 7], not "{chn}"')
+        if isinstance(chn, int):
+            if chn < 0 or chn > 7:
+                raise ValueError(
+                    f'ADC channel should be between [0, 7], not "{chn}"')
+        
         chn = 7 - chn
+        print('Completed subtraction.')
         # Convert to Register value
         self.chn = chn | 0x10
+        #else:
+        #    print(f'catch obj {chn}')
 
     def read(self):
         """
