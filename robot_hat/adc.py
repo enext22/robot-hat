@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from .i2c import I2C
+import logging
 
 
 class ADC(I2C):
@@ -21,14 +22,14 @@ class ADC(I2C):
             super().__init__(self.ADDR, *args, **kwargs)
         self._debug(f'ADC device address: 0x{self.address:02X}')
 
-        print(f'Blocking here: {chn}')
+        logging.debug(f'Blocking here: {chn}')
 
         if isinstance(chn, str):
             # If chn is a string, assume it's a pin name, remove A and convert to int
             if chn.startswith("A"):
-                print("Converting string.")
+                logging.debug("Converting string.")
                 chn = int(chn[1:])
-                print(chn)
+                logging.debug(chn)
             else:
                 raise ValueError(
                     f'ADC channel should be between [A0, A7], not "{chn}"')
@@ -39,7 +40,7 @@ class ADC(I2C):
                     f'ADC channel should be between [0, 7], not "{chn}"')
         
         chn = 7 - chn
-        print('Completed subtraction.')
+        logging.debug('Completed subtraction.')
         # Convert to Register value
         self.chn = chn | 0x10
         #else:

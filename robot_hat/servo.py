@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from .pwm import PWM
 from .utils import mapping
-
+import logging
 
 class Servo(PWM):
     """Servo motor class"""
@@ -29,7 +29,6 @@ class Servo(PWM):
         :param angle: angle(-90~90)
         :type angle: float
         """
-        print('Reached statement')
         if not (isinstance(angle, int) or isinstance(angle, float)):
             raise ValueError(
                 "Angle value should be int or float value, not %s" % type(angle))
@@ -37,7 +36,8 @@ class Servo(PWM):
             angle = -90
         if angle > 90:
             angle = 90
-        print(f"Set angle to: {angle}") #self._debug(f"Set angle to: {angle}")
+        
+        logging.debug(f"Set angle to: {angle}") #self._debug(f"Set angle to: {angle}")
         pulse_width_time = mapping(angle, -90, 90, self.MIN_PW, self.MAX_PW)
         self._debug(f"Pulse width: {pulse_width_time}")
         self.pulse_width_time(pulse_width_time)

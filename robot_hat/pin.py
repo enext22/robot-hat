@@ -2,7 +2,7 @@
 from .basic import _Basic_class
 import gpiozero  # https://gpiozero.readthedocs.io/en/latest/installing.html
 from gpiozero import OutputDevice, InputDevice, Button
-
+import logging
 
 class Pin(_Basic_class):
     """Pin manipulation class"""
@@ -71,6 +71,8 @@ class Pin(_Basic_class):
         :type active_state: bool or None
         """
         super().__init__(*args, **kwargs)
+
+        logging.debug(f'Pin value is: {pin}')
 
         # parse pin
         if isinstance(pin, str):
